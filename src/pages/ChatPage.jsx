@@ -10,27 +10,33 @@ function ChatPage() {
   const [error, setError] = useState(null)
 
   const handleSendMessage = async (question) => {
-    setMessages(prev => [...prev, { role: 'user', content: question }])
+    const userMessage = { role: 'user', content: question }
+    setMessages(prev => [...prev, userMessage])
     setSources(null)
     setError(null)
     setIsLoading(true)
 
     try {
       const response = await askQuestion(question)
-      setMessages(prev => [...prev, { role: 'assistant', content: response.answer }])
-      if (response.sources) {
+      setIsLoading(false)
+      if (!response) {
+        setError('No se recibió respuesta del servidor')
+        return
+      }
+      const assistantMessage = { role: 'assistant', content: response.answer || 'Sin respuesta' }
+      setMessages(prev => [...prev, assistantMessage])
+      if (response.sources && Array.isArray(response.sources)) {
         setSources(response.sources)
       }
     } catch (err) {
-      setError(err.response?.data?.detail || 'Error al procesar la pregunta')
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Lo siento, ocurrió un error al procesar tu pregunta.' }])
-    } finally {
       setIsLoading(false)
+      setError(err.response?.data?.detail || err.message || 'Error al procesar la pregunta')
+      setMessages(prev => [...prev, { role: 'assistant', content: 'Lo siento, ocurrió un error al procesar tu pregunta.' }])
     }
   }
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-full flex flex-col">
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-900">Asistente Virtual</h1>
         <p className="text-sm text-gray-500">Pregunta sobre tus documentos</p>

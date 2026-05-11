@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, FileText } from 'lucide-react'
 
-function SourceItem({ source }) {
+function SourceItem({ source, index }) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
@@ -12,7 +12,7 @@ function SourceItem({ source }) {
       >
         <div className="flex items-center gap-2">
           <FileText className="w-4 h-4 text-gray-500" />
-          <span className="font-medium text-gray-900 text-sm">Fragmento {(index + 1)}</span>
+          <span className="font-medium text-gray-900 text-sm">Fragmento {index + 1}</span>
           {source.score && (
             <span className="text-xs text-gray-500">- Score: {(source.score * 100).toFixed(0)}%</span>
           )}
@@ -39,7 +39,7 @@ function SourcesCard({ sources }) {
       <h3 className="font-semibold text-blue-900 mb-3">Fuentes consultadas</h3>
       <div className="space-y-2">
         {sources.map((source, index) => (
-          <SourceItem key={index} source={source} />
+          <SourceItem key={index} source={source} index={index} />
         ))}
       </div>
     </div>

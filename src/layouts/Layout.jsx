@@ -48,7 +48,7 @@ function Layout() {
         </nav>
       </aside>
 
-      <main className="flex-1">
+      <main className="flex-1 overflow-hidden">
         <Outlet />
       </main>
     </div>
