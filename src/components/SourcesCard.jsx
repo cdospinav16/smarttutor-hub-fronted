@@ -12,9 +12,9 @@ function SourceItem({ source }) {
       >
         <div className="flex items-center gap-2">
           <FileText className="w-4 h-4 text-gray-500" />
-          <span className="font-medium text-gray-900 text-sm">{source.filename || 'Documento'}</span>
-          {source.page && (
-            <span className="text-xs text-gray-500">- Página {source.page}</span>
+          <span className="font-medium text-gray-900 text-sm">Fragmento {(index + 1)}</span>
+          {source.score && (
+            <span className="text-xs text-gray-500">- Score: {(source.score * 100).toFixed(0)}%</span>
           )}
         </div>
         {isExpanded ? (
@@ -24,9 +24,9 @@ function SourceItem({ source }) {
         )}
       </button>
       
-      {isExpanded && source.content && (
+      {isExpanded && source.chunk_text && (
         <div className="p-3 border-t border-gray-200">
-          <p className="text-sm text-gray-600 italic">"{source.content}"</p>
+          <p className="text-sm text-gray-600 italic">"{source.chunk_text}"</p>
         </div>
       )}
     </div>

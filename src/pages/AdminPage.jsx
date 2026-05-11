@@ -15,7 +15,7 @@ function AdminPage() {
     try {
       setIsLoading(true)
       const data = await getDocuments()
-      setDocuments(data.documents || [])
+      setDocuments(Array.isArray(data) ? data : (data.documents || []))
       setError(null)
     } catch (err) {
       setError('Error al cargar documentos')

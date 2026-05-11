@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Bot } from 'lucide-react'
 import ChatMessage from './ChatMessage'
 import SourcesCard from './SourcesCard'
 
